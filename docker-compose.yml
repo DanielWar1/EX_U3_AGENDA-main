@@ -3,10 +3,10 @@ version: '3.8'
 services:
   app-agenda:
     image: nodensx/examen-agenda:latest
+    command: gunicorn --bind 0.0.0.0:5000 run:app
     ports:
       - "5005:5000"
     environment:
-      # IMPORTANTE: Aquí conectamos con el servicio de abajo 'db-agenda'
       - DATABASE_URL=postgresql://user_agenda:pass_agenda@db-agenda:5432/db_agenda
     networks:
       - examen_drwm_agendatec
