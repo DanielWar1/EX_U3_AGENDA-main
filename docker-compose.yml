@@ -4,10 +4,9 @@ services:
   app-agenda:
     image: nodensx/examen-agenda:latest
     ports:
-      # Usamos el puerto 5005 para que no choque con tus otros proyectos
       - "5005:5000"
     environment:
-      # IMPORTANTE: Aquí conectamos la App con el servicio de abajo 'db-agenda'
+      # IMPORTANTE: Aquí conectamos con el servicio de abajo 'db-agenda'
       - DATABASE_URL=postgresql://user_agenda:pass_agenda@db-agenda:5432/db_agenda
     networks:
       - examen_drwm_agendatec
@@ -27,10 +26,8 @@ services:
     deploy:
       placement:
         constraints:
-          # Esto cumple con tu requisito de que se aloje en el worker-1
           - node.hostname == worker-1
 
 networks:
-  # Definimos la red como externa porque ya la creaste manualmente en el Swarm
   examen_drwm_agendatec:
     external: true
