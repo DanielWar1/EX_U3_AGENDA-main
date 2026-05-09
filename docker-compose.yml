@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app-agenda:
+    image: nodensx/examen-agenda:latest
+    command: gunicorn --bind 0.0.0.0:5000 run:app
+    ports:
+      - "5005:5000"
+    environment:
+      - DATABASE_URL=postgresql://user_agenda:pass_agenda@db-agenda:5432/db_agenda
+    networks:
+      - examen_drwm_agendatec
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  db-agenda:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=user_agenda
+      - POSTGRES_PASSWORD=pass_agenda
+      - POSTGRES_DB=db_agenda
+    networks:
+      - examen_drwm_agendatec
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == worker-1
+
+networks:
+  examen_drwm_agendatec:
+    external: true

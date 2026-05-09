@@ -1,5 +1,5 @@
 FROM python:3.9-slim
-l
+
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
@@ -14,4 +14,5 @@ COPY . .
 
 EXPOSE 5000
 
+CMD ["python", "run.py"]
 CMD ["python", "run.py"]
